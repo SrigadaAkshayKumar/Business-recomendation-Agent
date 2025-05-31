@@ -23,10 +23,13 @@ const Main = ({ mode }) => {
     setOutput("");
 
     try {
-      const response = await axios.post("http://localhost:5000/api/generate", {
-        mode,
-        ...formData,
-      });
+      const response = await axios.post(
+        "https://backend-agent-yaqo.onrender.com/api/generate",
+        {
+          mode,
+          ...formData,
+        }
+      );
 
       setOutput(response.data.result);
     } catch (error) {
