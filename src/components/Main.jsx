@@ -24,7 +24,7 @@ const Main = ({ mode }) => {
 
     try {
       const response = await axios.post(
-        "/api/generate", //https://backend-agent-yaqo.onrender.com
+        "https://backend-agent-yaqo.onrender.com/api/generate",
         {
           mode,
           ...formData,
