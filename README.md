@@ -1,70 +1,143 @@
-# Getting Started with Create React App
+## Business Recommendation AI Agent
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a smart AI-powered web application that provides **location-based business suggestions** and **business-based location recommendations** using Advanced LLM. Ideal for aspiring entrepreneurs and startups to identify high-potential business opportunities based on real-world demand.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+### Features
 
-### `npm start`
+Two smart AI recommendation modes:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. **Location → Business** (based on area and budget)
+2. **Business → Location** (best zones for a given business idea)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+AI powered intelligence with web-search capability
+Clean and responsive React frontend
+Flask backend with secure API integration
+Easy to customize and extend with your own models later
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Use Cases
 
-### `npm run build`
+#### Case 1: Location-Based Business Recommendation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+User Inputs:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- City
+- Area
+- Budget (Low-Medium / Medium-High / High)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+> Output: Lists businesses in that area, mentions demand, and recommends top 2–3 businesses.
 
-### `npm run eject`
+#### Case 2: Business Idea Based Location Recommendation
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+User Inputs:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Business Idea (e.g., Restaurant)
+- City/State
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+> Output: Recommends top 2–3 areas within the city for the business idea with reasons.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+### Tech Stack
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+| Layer      | Tech Used      |
+| ---------- | -------------- |
+| Frontend   | React.js       |
+| Backend    | Flask (Python) |
+| Hosting    | Vercel         |
+| Versioning | Git + GitHub   |
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+### Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```
+└──business-recomendation-agent/
+    ├── frontend/
+    │   ├── README.md
+    │   ├── package-lock.json
+    │   ├── package.json
+    │   ├── .gitignore
+    │   ├── public/
+    │   │   ├── index.html
+    │   │   ├── manifest.json
+    │   │   └── robots.txt
+    │   └── src/
+    │       ├── App.css
+    │       ├── App.js
+    │       ├── App.test.js
+    │       ├── index.js
+    │       ├── reportWebVitals.js
+    │       ├── setupTests.js
+    │       └── components/
+    │           └── Main.jsx
+    └── server/
+        ├── app.py
+        ├── requirements.txt
+        ├── .env
+        └── utils/
+            ├── prompt_generator.py
+            └── __pycache__/
 
-### Analyzing the Bundle Size
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+### Setup Instructions
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+#### 1. Clone the Repo
 
-### Advanced Configuration
+```bash
+git clone https://github.com/yourusername/Business-recomendation-Agent.git
+cd Business-recomendation-Agent
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+#### 2. Setup Backend (Flask + Gemini)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```bash
+cd server
+pip install -r requirements.txt
+```
 
-### `npm run build` fails to minify
+Run Flask server:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+python app.py
+```
+
+---
+
+#### 3. Setup Frontend (React)
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+Runs at `http://localhost:3000`
+Backend runs at `http://localhost:5000`
+
+---
+
+### How It Works
+
+- User selects the mode and submits form input.
+- React sends data to Flask using Axios.
+- Flask generates a dynamic prompt.
+- Gemini API analyzes the prompt and returns a response.
+- Frontend displays the result in a clean, structured format.
+
+---
+
+### Future Improvements
+
+- Add database for analytics
+- Multi-language support
+- Real-time trend analysis with external APIs
+- Replace Gemini with custom ML model later
