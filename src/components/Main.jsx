@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import ReactMarkdown from "react-markdown";
+import { getPrompt } from "./prompts";
 
 const Main = ({ mode }) => {
   const [formData, setFormData] = useState({
@@ -22,19 +22,39 @@ const Main = ({ mode }) => {
     setLoading(true);
     setOutput("");
 
+    const prompt = getPrompt(mode, formData);
+    console.log("API key:", process.env.REACT_APP_GROK_API_KEY);
+
     try {
-      const response = await axios.post(
-        "https://backend-agent-yaqo.onrender.com/api/generate",
+      const response = await fetch(
+        "https://api.groq.com/openai/v1/chat/completions",
         {
-          mode,
-          ...formData,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.REACT_APP_GROK_API_KEY}`,
+          },
+          body: JSON.stringify({
+            model: "meta-llama/llama-4-scout-17b-16e-instruct",
+            messages: [{ role: "user", content: prompt }],
+            temperature: 0.7,
+          }),
         }
       );
 
-      setOutput(response.data.result);
+      const data = await response.json();
+      console.log("Grok API response:", data); // <-- Debug
+
+      if (data.choices && data.choices.length > 0) {
+        setOutput(data.choices[0].message.content);
+      } else if (data.error) {
+        setOutput(`❌ API Error: ${data.error.message}`);
+      } else {
+        setOutput("⚠️ No valid response received.");
+      }
     } catch (error) {
       console.error(error);
-      setOutput("❌ Error: Unable to generate recommendation.");
+      setOutput("❌ Error: Unable to generate response.");
     }
 
     setLoading(false);
@@ -89,21 +109,13 @@ const Main = ({ mode }) => {
             components={{
               h1: ({ node, ...props }) => (
                 <h1
-                  style={{
-                    fontSize: "1.5rem",
-                    margin: "0",
-                    lineHeight: "1",
-                  }}
+                  style={{ fontSize: "1.5rem", margin: "0", lineHeight: "1" }}
                   {...props}
                 />
               ),
               h2: ({ node, ...props }) => (
                 <h2
-                  style={{
-                    fontSize: "1.2rem",
-                    margin: "0",
-                    lineHeight: "1",
-                  }}
+                  style={{ fontSize: "1.2rem", margin: "0", lineHeight: "1" }}
                   {...props}
                 />
               ),
